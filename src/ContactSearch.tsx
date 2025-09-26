@@ -44,6 +44,13 @@ const ContactSearch: React.FC = () => {
         const emailToSearch = searchEmail || email;
         if (!emailToSearch) return;
 
+        // 🔹 Check if input is in email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailToSearch)) {
+            setError('Invalid email format. Please enter a valid email address.');
+            return;
+        }
+
         setLoading(true);
         setError(null);
         setContact(null);
@@ -55,11 +62,12 @@ const ContactSearch: React.FC = () => {
                 includeProfilePictures: true
             },
             (result: TContactsResopnse) => {
+                console.log('SearchContacts result:', contact);
                 setLoading(false);
+
                 if (result.Data.length > 0) {
                     setContact(result.Data[0] as ContactType);
 
-                    // Add to recent searches and save in localStorage
                     setRecentSearches(prev => {
                         const newList = [emailToSearch, ...prev.filter(e => e !== emailToSearch)].slice(0, MAX_RECENT);
                         localStorage.setItem('recentSearches', JSON.stringify(newList));
@@ -72,12 +80,14 @@ const ContactSearch: React.FC = () => {
         );
     };
 
+
     const profileSrc = contact?.ProfilePicture && typeof contact.ProfilePicture === 'string'
         ? getProfilePictureSrc(contact.ProfilePicture)
         : null;
 
     return (
         <div className="contact-search-container">
+
             {/* Email Input */}
             <label htmlFor="emailInput" className="input-label">Contact Email</label>
             <input
@@ -129,7 +139,7 @@ const ContactSearch: React.FC = () => {
 
                     <div className="contact-info">
                         <h2 className="contact-name">
-                            {String(contact.FileAs || contact.FullName || 'No Name')}
+                            {String(contact.FirstName || '')} {String(contact.LastName || '')}
                         </h2>
                         <div className="contact-field">
                             <strong>Email:</strong> {String(contact.Email1Address || 'N/A')}
@@ -139,14 +149,20 @@ const ContactSearch: React.FC = () => {
                                 <strong>Phone:</strong> {String(contact.TelephoneNumber1Normalized)}
                             </div>
                         )}
+                        {typeof contact.BusinessAddressStreet === 'string' && contact.BusinessAddressStreet && (
+                            <div className="contact-field">
+                                <strong>Address:</strong> {String(contact.BusinessAddressStreet || '')}
+                            </div>
+                        )}
                         {typeof contact.BusinessAddressCity === 'string' && contact.BusinessAddressCity && (
                             <div className="contact-field">
-                                <strong>City:</strong> {String(contact.BusinessAddressCity)}
+                                <strong>City:</strong> {String(contact.BusinessAddressCity || '')}, {String(contact.BusinessAddressState || '')}
                             </div>
                         )}
                     </div>
                 </div>
             )}
+            <img src='favicon.ico' alt="Logo" className="logo" />
         </div>
     );
 };
