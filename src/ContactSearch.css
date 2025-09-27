@@ -1,5 +1,5 @@
 body {
-    background-color: rgb(174, 174, 174);
+    background-color: rgb(237, 237, 237);
 }
 
 .contact-search-container {
@@ -48,7 +48,6 @@ body {
 
 .search-button:hover:not(:disabled) {
     background-color: #0056b3;
-    transform: translateY(-1px);
 }
 
 .contact-card {
@@ -144,9 +143,9 @@ body {
 
 .logo {
     position: absolute;
-    bottom: 16px; /* distance from bottom of card */
-    right: 16px;  /* distance from right of card */
-    width: 48px;  /* adjust logo size */
+    bottom: 16px; 
+    right: 16px;  
+    width: 48px;  
     height: auto;
     opacity: 0.9;
     cursor: pointer;
