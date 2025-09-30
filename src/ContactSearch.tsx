@@ -162,7 +162,10 @@ const ContactSearch: React.FC = () => {
                     </div>
                 </div>
             )}
-            <img src='favicon.ico' alt="Logo" className="logo" />
+            
+            <a href='https://www.eway-crm.com/'>
+                <img src='favicon.ico' alt="Logo" className="logo" />
+            </a>
         </div>
     );
 };
