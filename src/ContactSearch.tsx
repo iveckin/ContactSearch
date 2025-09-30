@@ -62,7 +62,7 @@ const ContactSearch: React.FC = () => {
                 includeProfilePictures: true
             },
             (result: TContactsResopnse) => {
-                console.log('SearchContacts result:', contact);
+                //console.log('SearchContacts result:', contact);
                 setLoading(false);
 
                 if (result.Data.length > 0) {
